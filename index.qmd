@@ -1,6 +1,6 @@
 ---
 title: "U.S. National Weather Service"
-subtitle: "Step by Step Process through the U.S. NWS API for a 7 Day Forcast"
+subtitle: "Step by step process through the U.S. NWS API for a live seven day weather forcast"
 author: "Ana Collado"
 code-block-border: "#F8F8F8"
 monobackgroundcolor: "#F8F8F8"

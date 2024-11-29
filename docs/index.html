@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ana Collado">
 
-<title>U.S. National Weather Service API Project - U.S. National Weather Service</title>
+<title>API Project 1 - U.S. National Weather Service</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">U.S. National Weather Service API Project</span>
+    <span class="navbar-title">API Project 1</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">U.S. National Weather Service</h1>
-<p class="subtitle lead">Step by Step Process through the U.S. NWS API for a 7 Day Forcast</p>
+<p class="subtitle lead">Step by step process through the U.S. NWS API for a live seven day weather forcast</p>
 </div>
 
 
@@ -314,9 +314,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  $ properties:List of 7
   ..$ units            : chr "us"
   ..$ forecastGenerator: chr "BaselineForecastGenerator"
-  ..$ generatedAt      : chr "2024-11-29T16:13:20+00:00"
-  ..$ updateTime       : chr "2024-11-29T14:36:55+00:00"
-  ..$ validTimes       : chr "2024-11-29T08:00:00+00:00/P7DT17H"
+  ..$ generatedAt      : chr "2024-11-29T17:11:19+00:00"
+  ..$ updateTime       : chr "2024-11-29T16:55:33+00:00"
+  ..$ validTimes       : chr "2024-11-29T10:00:00+00:00/P7DT15H"
   ..$ elevation        :List of 2
   .. ..$ unitCode: chr "wmoUnit:m"
   .. ..$ value   : num 2.13
@@ -368,17 +368,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>List of 7
  $ units            : chr "us"
  $ forecastGenerator: chr "BaselineForecastGenerator"
- $ generatedAt      : chr "2024-11-29T16:13:20+00:00"
- $ updateTime       : chr "2024-11-29T14:36:55+00:00"
- $ validTimes       : chr "2024-11-29T08:00:00+00:00/P7DT17H"
+ $ generatedAt      : chr "2024-11-29T17:11:19+00:00"
+ $ updateTime       : chr "2024-11-29T16:55:33+00:00"
+ $ validTimes       : chr "2024-11-29T10:00:00+00:00/P7DT15H"
  $ elevation        :List of 2
   ..$ unitCode: chr "wmoUnit:m"
   ..$ value   : num 2.13
  $ periods          :List of 14
   ..$ :List of 14
   .. ..$ number                    : int 1
-  .. ..$ name                      : chr "Today"
-  .. ..$ startTime                 : chr "2024-11-29T11:00:00-05:00"
+  .. ..$ name                      : chr "This Afternoon"
+  .. ..$ startTime                 : chr "2024-11-29T12:00:00-05:00"
   .. ..$ endTime                   : chr "2024-11-29T18:00:00-05:00"
   .. ..$ isDaytime                 : logi TRUE
   .. ..$ temperature               : int 44
@@ -387,11 +387,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   .. ..$ probabilityOfPrecipitation:List of 2
   .. .. ..$ unitCode: chr "wmoUnit:percent"
   .. .. ..$ value   : int 20
-  .. ..$ windSpeed                 : chr "9 to 13 mph"
+  .. ..$ windSpeed                 : chr "13 mph"
   .. ..$ windDirection             : chr "W"
-  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/bkn/rain_showers,20?size=medium"
-  .. ..$ shortForecast             : chr "Partly Sunny then Slight Chance Rain Showers"
-  .. ..$ detailedForecast          : chr "A slight chance of rain showers after 1pm. Partly sunny. High near 44, with temperatures falling to around 42 i"| __truncated__
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/rain_showers,20?size=medium"
+  .. ..$ shortForecast             : chr "Isolated Rain Showers"
+  .. ..$ detailedForecast          : chr "Isolated rain showers. Partly sunny. High near 44, with temperatures falling to around 42 in the afternoon. Wes"| __truncated__
   ..$ :List of 14
   .. ..$ number                    : int 2
   .. ..$ name                      : chr "Tonight"
@@ -403,12 +403,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   .. ..$ temperatureTrend          : chr ""
   .. ..$ probabilityOfPrecipitation:List of 2
   .. .. ..$ unitCode: chr "wmoUnit:percent"
-  .. .. ..$ value   : int 20
+  .. .. ..$ value   : NULL
   .. ..$ windSpeed                 : chr "13 mph"
   .. ..$ windDirection             : chr "W"
-  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/rain_showers,20/few?size=medium"
-  .. ..$ shortForecast             : chr "Slight Chance Rain Showers then Mostly Clear"
-  .. ..$ detailedForecast          : chr "A slight chance of rain showers before 7pm. Mostly clear. Low around 31, with temperatures rising to around 33 "| __truncated__
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/few?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Clear"
+  .. ..$ detailedForecast          : chr "Mostly clear. Low around 31, with temperatures rising to around 33 overnight. West wind around 13 mph."
   ..$ :List of 14
   .. ..$ number                    : int 3
   .. ..$ name                      : chr "Saturday"
@@ -652,7 +652,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 14 × 14</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    number name           startTime endTime isDaytime temperature temperatureUnit</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;lgl&gt;           &lt;int&gt; &lt;chr&gt;          </span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1      1 Today          2024-11-… 2024-1… TRUE               44 F              </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1      1 This Afternoon 2024-11-… 2024-1… TRUE               44 F              </span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2      2 Tonight        2024-11-… 2024-1… FALSE              31 F              </span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3      3 Saturday       2024-11-… 2024-1… TRUE               38 F              </span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4      4 Saturday Night 2024-11-… 2024-1… FALSE              28 F              </span></span>
@@ -681,8 +681,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 14 × 6
    number name            startTime    temperature temperatureUnit shortForecast
     &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;        
- 1      1 Today           2024-11-29T…          44 F               Partly Sunny…
- 2      2 Tonight         2024-11-29T…          31 F               Slight Chanc…
+ 1      1 This Afternoon  2024-11-29T…          44 F               Isolated Rai…
+ 2      2 Tonight         2024-11-29T…          31 F               Mostly Clear 
  3      3 Saturday        2024-11-30T…          38 F               Sunny        
  4      4 Saturday Night  2024-11-30T…          28 F               Mostly Clear 
  5      5 Sunday          2024-12-01T…          37 F               Mostly Sunny 
