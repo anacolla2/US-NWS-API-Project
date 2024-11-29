@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ana Collado">
+
+<title>U.S. National Weather Service API Project - U.S. National Weather Service</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">U.S. National Weather Service API Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link active" data-scroll-target="#load-libraries">·Load Libraries:</a></li>
+  <li><a href="#assigning-values" id="toc-assigning-values" class="nav-link" data-scroll-target="#assigning-values">·Assigning Values:</a></li>
+  <li><a href="#requesting-from-the-api" id="toc-requesting-from-the-api" class="nav-link" data-scroll-target="#requesting-from-the-api">·Requesting from the API:</a></li>
+  <li><a href="#converting-to-tibble" id="toc-converting-to-tibble" class="nav-link" data-scroll-target="#converting-to-tibble">·Converting to Tibble:</a></li>
+  <li><a href="#selecting-the-lists-to-unnest" id="toc-selecting-the-lists-to-unnest" class="nav-link" data-scroll-target="#selecting-the-lists-to-unnest">·Selecting the Lists to Unnest</a></li>
+  <li><a href="#isolating-columns-of-interest" id="toc-isolating-columns-of-interest" class="nav-link" data-scroll-target="#isolating-columns-of-interest">·Isolating Columns of Interest</a></li>
+  <li><a href="#finalizing-the-data-frame-clean" id="toc-finalizing-the-data-frame-clean" class="nav-link" data-scroll-target="#finalizing-the-data-frame-clean">·Finalizing the Data Frame Clean</a></li>
+  <li><a href="#creating-a-forecast-visualization-using-ggplot" id="toc-creating-a-forecast-visualization-using-ggplot" class="nav-link" data-scroll-target="#creating-a-forecast-visualization-using-ggplot">·Creating a Forecast Visualization using ggplot</a></li>
+  <li><a href="#addressing-issues" id="toc-addressing-issues" class="nav-link" data-scroll-target="#addressing-issues">·Addressing Issues</a></li>
+  <li><a href="#ggplot-redo" id="toc-ggplot-redo" class="nav-link" data-scroll-target="#ggplot-redo">·ggPlot redo</a></li>
+  <li><a href="#useful-references" id="toc-useful-references" class="nav-link" data-scroll-target="#useful-references">·Useful References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">U.S. National Weather Service</h1>
+<p class="subtitle lead">Step by Step Process through the U.S. NWS API for a 7 Day Forcast</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ana Collado </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/2.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>The U.S. National Weather Service is part of a federal agency that <a href="https://www.weather.gov/media/climateservices/WeatherAndClimate.pdf">monitors climate (longterm weather averages)</a>, provides weather forecasts, warnings, and general information to the public. Their data is openly available for use through its API for developers.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<section id="exploration-goal-obtain-7-day-forecast-for-new-york" class="level4">
+<h4 class="anchored" data-anchor-id="exploration-goal-obtain-7-day-forecast-for-new-york">Exploration Goal: Obtain 7-Day Forecast for New York</h4>
+<p>The NWS website states the grid forecast can be obtained with coordinates. The longitude and latitude points for New York are 40.730610, -73.935242 respectively.</p>
+</section>
+<section id="load-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-libraries">·Load Libraries:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(repurrrsive)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="assigning-values" class="level3">
+<h3 class="anchored" data-anchor-id="assigning-values">·Assigning Values:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>api_base_url <span class="ot">&lt;-</span>  <span class="st">"https://api.weather.gov/"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ny_coords <span class="ot">&lt;-</span> <span class="st">"https://api.weather.gov/points/40.7128,-74.0060"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="requesting-from-the-api" class="level3">
+<h3 class="anchored" data-anchor-id="requesting-from-the-api">·Requesting from the API:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ask_api<span class="ot">&lt;-</span> <span class="fu">request</span>(ny_coords) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_perform</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>api_response<span class="ot">&lt;-</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resp_body_json</span>(ask_api) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 5
+ $ @context  :List of 2
+  ..$ : chr "https://geojson.org/geojson-ld/geojson-context.jsonld"
+  ..$ :List of 17
+  .. ..$ @version        : chr "1.1"
+  .. ..$ wx              : chr "https://api.weather.gov/ontology#"
+  .. ..$ s               : chr "https://schema.org/"
+  .. ..$ geo             : chr "http://www.opengis.net/ont/geosparql#"
+  .. ..$ unit            : chr "http://codes.wmo.int/common/unit/"
+  .. ..$ @vocab          : chr "https://api.weather.gov/ontology#"
+  .. ..$ geometry        :List of 2
+  .. ..$ city            : chr "s:addressLocality"
+  .. ..$ state           : chr "s:addressRegion"
+  .. ..$ distance        :List of 2
+  .. ..$ bearing         :List of 1
+  .. ..$ value           :List of 1
+  .. ..$ unitCode        :List of 2
+  .. ..$ forecastOffice  :List of 1
+  .. ..$ forecastGridData:List of 1
+  .. ..$ publicZone      :List of 1
+  .. ..$ county          :List of 1
+ $ id        : chr "https://api.weather.gov/points/40.7128,-74.006"
+ $ type      : chr "Feature"
+ $ geometry  :List of 2
+  ..$ type       : chr "Point"
+  ..$ coordinates:List of 2
+  .. ..$ : num -74
+  .. ..$ : num 40.7
+ $ properties:List of 17
+  ..$ @id                : chr "https://api.weather.gov/points/40.7128,-74.006"
+  ..$ @type              : chr "wx:Point"
+  ..$ cwa                : chr "OKX"
+  ..$ forecastOffice     : chr "https://api.weather.gov/offices/OKX"
+  ..$ gridId             : chr "OKX"
+  ..$ gridX              : int 33
+  ..$ gridY              : int 35
+  ..$ forecast           : chr "https://api.weather.gov/gridpoints/OKX/33,35/forecast"
+  ..$ forecastHourly     : chr "https://api.weather.gov/gridpoints/OKX/33,35/forecast/hourly"
+  ..$ forecastGridData   : chr "https://api.weather.gov/gridpoints/OKX/33,35"
+  ..$ observationStations: chr "https://api.weather.gov/gridpoints/OKX/33,35/stations"
+  ..$ relativeLocation   :List of 3
+  .. ..$ type      : chr "Feature"
+  .. ..$ geometry  :List of 2
+  .. ..$ properties:List of 4
+  ..$ forecastZone       : chr "https://api.weather.gov/zones/forecast/NYZ072"
+  ..$ county             : chr "https://api.weather.gov/zones/county/NYC061"
+  ..$ fireWeatherZone    : chr "https://api.weather.gov/zones/fire/NYZ212"
+  ..$ timeZone           : chr "America/New_York"
+  ..$ radarStation       : chr "KDIX"</code></pre>
+</div>
+</div>
+<p>The <code>glimpse()</code> function shows all the groups of data for our chosen coordinates. Since our goal is to pull the weeks predicted weather, the information needed is stored in the endpoint named <code>$forecast</code> .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assigning endpoint value</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="st">"https://api.weather.gov/gridpoints/OKX/33,35/forecast"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Requesting from the API again</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ask_again <span class="ot">&lt;-</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">request</span>(forecast) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_perform</span>()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>response_again <span class="ot">&lt;-</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resp_body_json</span>(ask_again) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ @context  :List of 2
+  ..$ : chr "https://geojson.org/geojson-ld/geojson-context.jsonld"
+  ..$ :List of 5
+  .. ..$ @version: chr "1.1"
+  .. ..$ wx      : chr "https://api.weather.gov/ontology#"
+  .. ..$ geo     : chr "http://www.opengis.net/ont/geosparql#"
+  .. ..$ unit    : chr "http://codes.wmo.int/common/unit/"
+  .. ..$ @vocab  : chr "https://api.weather.gov/ontology#"
+ $ type      : chr "Feature"
+ $ geometry  :List of 2
+  ..$ type       : chr "Polygon"
+  ..$ coordinates:List of 1
+  .. ..$ :List of 5
+ $ properties:List of 7
+  ..$ units            : chr "us"
+  ..$ forecastGenerator: chr "BaselineForecastGenerator"
+  ..$ generatedAt      : chr "2024-11-29T16:13:20+00:00"
+  ..$ updateTime       : chr "2024-11-29T14:36:55+00:00"
+  ..$ validTimes       : chr "2024-11-29T08:00:00+00:00/P7DT17H"
+  ..$ elevation        :List of 2
+  .. ..$ unitCode: chr "wmoUnit:m"
+  .. ..$ value   : num 2.13
+  ..$ periods          :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14
+  .. ..$ :List of 14</code></pre>
+</div>
+</div>
+<p>Now, we’ll unnest and rectangle the data.</p>
+</section>
+<section id="converting-to-tibble" class="level3">
+<h3 class="anchored" data-anchor-id="converting-to-tibble">·Converting to Tibble:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response_df<span class="ot">&lt;-</span> <span class="fu">tibble</span>(response_again)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(response_df) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I encountered many errors in unnesting because of the <em>structure</em> of the data. When using <code>glimpse()</code> or <code>print()</code> the data seeemd as though I would point to <code>$properties</code> to unnest.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="border: 4px solid #1E3F66;"></p>
+</figure>
+</div>
+<p>But in using <code>view()</code> the data looked different. <code>str()</code> shows whats inside in a very readable sort of way, but <code>view()</code> is perfect for identifying/naming the items in code. This format was <strong>necessary</strong> to point to the appropriate items to unnest.</p>
+<p>See below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/5.png" class="quarto-figure quarto-figure-center figure-img" style="border: 4px solid #1E3F66;" alt="screenshot of forecast tibble" width="600" height="204"></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(response_df<span class="sc">$</span>response_again[[<span class="dv">4</span>]]) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 7
+ $ units            : chr "us"
+ $ forecastGenerator: chr "BaselineForecastGenerator"
+ $ generatedAt      : chr "2024-11-29T16:13:20+00:00"
+ $ updateTime       : chr "2024-11-29T14:36:55+00:00"
+ $ validTimes       : chr "2024-11-29T08:00:00+00:00/P7DT17H"
+ $ elevation        :List of 2
+  ..$ unitCode: chr "wmoUnit:m"
+  ..$ value   : num 2.13
+ $ periods          :List of 14
+  ..$ :List of 14
+  .. ..$ number                    : int 1
+  .. ..$ name                      : chr "Today"
+  .. ..$ startTime                 : chr "2024-11-29T11:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-11-29T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 44
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : int 20
+  .. ..$ windSpeed                 : chr "9 to 13 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/bkn/rain_showers,20?size=medium"
+  .. ..$ shortForecast             : chr "Partly Sunny then Slight Chance Rain Showers"
+  .. ..$ detailedForecast          : chr "A slight chance of rain showers after 1pm. Partly sunny. High near 44, with temperatures falling to around 42 i"| __truncated__
+  ..$ :List of 14
+  .. ..$ number                    : int 2
+  .. ..$ name                      : chr "Tonight"
+  .. ..$ startTime                 : chr "2024-11-29T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-11-30T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 31
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : int 20
+  .. ..$ windSpeed                 : chr "13 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/rain_showers,20/few?size=medium"
+  .. ..$ shortForecast             : chr "Slight Chance Rain Showers then Mostly Clear"
+  .. ..$ detailedForecast          : chr "A slight chance of rain showers before 7pm. Mostly clear. Low around 31, with temperatures rising to around 33 "| __truncated__
+  ..$ :List of 14
+  .. ..$ number                    : int 3
+  .. ..$ name                      : chr "Saturday"
+  .. ..$ startTime                 : chr "2024-11-30T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-11-30T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 38
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "9 to 14 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/few?size=medium"
+  .. ..$ shortForecast             : chr "Sunny"
+  .. ..$ detailedForecast          : chr "Sunny, with a high near 38. Wind chill values as low as 24. West wind 9 to 14 mph."
+  ..$ :List of 14
+  .. ..$ number                    : int 4
+  .. ..$ name                      : chr "Saturday Night"
+  .. ..$ startTime                 : chr "2024-11-30T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-01T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 28
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "12 to 15 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/few?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Clear"
+  .. ..$ detailedForecast          : chr "Mostly clear, with a low around 28. Wind chill values as low as 19. West wind 12 to 15 mph."
+  ..$ :List of 14
+  .. ..$ number                    : int 5
+  .. ..$ name                      : chr "Sunday"
+  .. ..$ startTime                 : chr "2024-12-01T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-01T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 37
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "12 to 15 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/sct?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Sunny"
+  .. ..$ detailedForecast          : chr "Mostly sunny, with a high near 37. West wind 12 to 15 mph."
+  ..$ :List of 14
+  .. ..$ number                    : int 6
+  .. ..$ name                      : chr "Sunday Night"
+  .. ..$ startTime                 : chr "2024-12-01T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-02T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 31
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "8 to 13 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/few?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Clear"
+  .. ..$ detailedForecast          : chr "Mostly clear, with a low around 31."
+  ..$ :List of 14
+  .. ..$ number                    : int 7
+  .. ..$ name                      : chr "Monday"
+  .. ..$ startTime                 : chr "2024-12-02T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-02T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 40
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "12 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/sct?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Sunny"
+  .. ..$ detailedForecast          : chr "Mostly sunny, with a high near 40."
+  ..$ :List of 14
+  .. ..$ number                    : int 8
+  .. ..$ name                      : chr "Monday Night"
+  .. ..$ startTime                 : chr "2024-12-02T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-03T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 32
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "9 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/sct?size=medium"
+  .. ..$ shortForecast             : chr "Partly Cloudy"
+  .. ..$ detailedForecast          : chr "Partly cloudy, with a low around 32."
+  ..$ :List of 14
+  .. ..$ number                    : int 9
+  .. ..$ name                      : chr "Tuesday"
+  .. ..$ startTime                 : chr "2024-12-03T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-03T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 39
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "12 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/sct?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Sunny"
+  .. ..$ detailedForecast          : chr "Mostly sunny, with a high near 39."
+  ..$ :List of 14
+  .. ..$ number                    : int 10
+  .. ..$ name                      : chr "Tuesday Night"
+  .. ..$ startTime                 : chr "2024-12-03T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-04T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 31
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "10 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/bkn?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Cloudy"
+  .. ..$ detailedForecast          : chr "Mostly cloudy, with a low around 31."
+  ..$ :List of 14
+  .. ..$ number                    : int 11
+  .. ..$ name                      : chr "Wednesday"
+  .. ..$ startTime                 : chr "2024-12-04T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-04T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 38
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "10 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/bkn?size=medium"
+  .. ..$ shortForecast             : chr "Partly Sunny"
+  .. ..$ detailedForecast          : chr "Partly sunny, with a high near 38."
+  ..$ :List of 14
+  .. ..$ number                    : int 12
+  .. ..$ name                      : chr "Wednesday Night"
+  .. ..$ startTime                 : chr "2024-12-04T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-05T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 32
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : int 30
+  .. ..$ windSpeed                 : chr "10 mph"
+  .. ..$ windDirection             : chr "SW"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/snow,30?size=medium"
+  .. ..$ shortForecast             : chr "Chance Light Snow"
+  .. ..$ detailedForecast          : chr "A chance of snow after 7pm. Mostly cloudy, with a low around 32. Chance of precipitation is 30%."
+  ..$ :List of 14
+  .. ..$ number                    : int 13
+  .. ..$ name                      : chr "Thursday"
+  .. ..$ startTime                 : chr "2024-12-05T06:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-05T18:00:00-05:00"
+  .. ..$ isDaytime                 : logi TRUE
+  .. ..$ temperature               : int 40
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : int 30
+  .. ..$ windSpeed                 : chr "9 to 13 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/day/snow,30/snow?size=medium"
+  .. ..$ shortForecast             : chr "Chance Light Snow"
+  .. ..$ detailedForecast          : chr "A chance of snow before 1pm. Partly sunny, with a high near 40. Chance of precipitation is 30%."
+  ..$ :List of 14
+  .. ..$ number                    : int 14
+  .. ..$ name                      : chr "Thursday Night"
+  .. ..$ startTime                 : chr "2024-12-05T18:00:00-05:00"
+  .. ..$ endTime                   : chr "2024-12-06T06:00:00-05:00"
+  .. ..$ isDaytime                 : logi FALSE
+  .. ..$ temperature               : int 33
+  .. ..$ temperatureUnit           : chr "F"
+  .. ..$ temperatureTrend          : chr ""
+  .. ..$ probabilityOfPrecipitation:List of 2
+  .. .. ..$ unitCode: chr "wmoUnit:percent"
+  .. .. ..$ value   : NULL
+  .. ..$ windSpeed                 : chr "13 mph"
+  .. ..$ windDirection             : chr "W"
+  .. ..$ icon                      : chr "https://api.weather.gov/icons/land/night/bkn/snow?size=medium"
+  .. ..$ shortForecast             : chr "Mostly Cloudy then Slight Chance Light Snow"
+  .. ..$ detailedForecast          : chr "A slight chance of snow after 1am. Mostly cloudy, with a low around 33."
+ NULL</code></pre>
+</div>
+</div>
+</section>
+<section id="selecting-the-lists-to-unnest" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-lists-to-unnest">·Selecting the Lists to Unnest</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>forecast<span class="ot">&lt;-</span> <span class="fu">tibble</span>(response_df<span class="sc">$</span>response_again[[<span class="dv">4</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once the main list is selected, using the <code>$</code> button allows for items of interest to be selected and by extension the appropriate characters are used.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>“this will save a lot of time and error messages” - my past self</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="border: 4px solid #1E3F66;"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="border: 4px solid #1E3F66;"></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">tibble</span>(forecast<span class="sc">$</span><span class="st">`</span><span class="at">response_df$response_again[[4]]</span><span class="st">`</span>[[<span class="dv">7</span>]])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>forecast<span class="ot">&lt;-</span> forecast <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(<span class="st">`</span><span class="at">forecast$\</span><span class="st">`</span>response_df<span class="sc">$</span>response_again[[<span class="dv">4</span>]]\<span class="st">`</span><span class="at">[[7]]</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 14 × 14</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    number name           startTime endTime isDaytime temperature temperatureUnit</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;lgl&gt;           &lt;int&gt; &lt;chr&gt;          </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1      1 Today          2024-11-… 2024-1… TRUE               44 F              </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2      2 Tonight        2024-11-… 2024-1… FALSE              31 F              </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3      3 Saturday       2024-11-… 2024-1… TRUE               38 F              </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4      4 Saturday Night 2024-11-… 2024-1… FALSE              28 F              </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  5      5 Sunday         2024-12-… 2024-1… TRUE               37 F              </span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  6      6 Sunday Night   2024-12-… 2024-1… FALSE              31 F              </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  7      7 Monday         2024-12-… 2024-1… TRUE               40 F              </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  8      8 Monday Night   2024-12-… 2024-1… FALSE              32 F              </span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  9      9 Tuesday        2024-12-… 2024-1… TRUE               39 F              </span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10     10 Tuesday Night  2024-12-… 2024-1… FALSE              31 F              </span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 11     11 Wednesday      2024-12-… 2024-1… TRUE               38 F              </span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 12     12 Wednesday Nig… 2024-12-… 2024-1… FALSE              32 F              </span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 13     13 Thursday       2024-12-… 2024-1… TRUE               40 F              </span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 14     14 Thursday Night 2024-12-… 2024-1… FALSE              33 F              </span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 7 more variables: temperatureTrend &lt;chr&gt;,</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="do">## #   probabilityOfPrecipitation &lt;list&gt;, windSpeed &lt;chr&gt;, windDirection &lt;chr&gt;,</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="do">## #   icon &lt;chr&gt;, shortForecast &lt;chr&gt;, detailedForecast &lt;chr&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="isolating-columns-of-interest" class="level3">
+<h3 class="anchored" data-anchor-id="isolating-columns-of-interest">·Isolating Columns of Interest</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>forecast<span class="ot">&lt;-</span> forecast <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, name, startTime, temperature, temperatureUnit, shortForecast) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 6
+   number name            startTime    temperature temperatureUnit shortForecast
+    &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;        
+ 1      1 Today           2024-11-29T…          44 F               Partly Sunny…
+ 2      2 Tonight         2024-11-29T…          31 F               Slight Chanc…
+ 3      3 Saturday        2024-11-30T…          38 F               Sunny        
+ 4      4 Saturday Night  2024-11-30T…          28 F               Mostly Clear 
+ 5      5 Sunday          2024-12-01T…          37 F               Mostly Sunny 
+ 6      6 Sunday Night    2024-12-01T…          31 F               Mostly Clear 
+ 7      7 Monday          2024-12-02T…          40 F               Mostly Sunny 
+ 8      8 Monday Night    2024-12-02T…          32 F               Partly Cloudy
+ 9      9 Tuesday         2024-12-03T…          39 F               Mostly Sunny 
+10     10 Tuesday Night   2024-12-03T…          31 F               Mostly Cloudy
+11     11 Wednesday       2024-12-04T…          38 F               Partly Sunny 
+12     12 Wednesday Night 2024-12-04T…          32 F               Chance Light…
+13     13 Thursday        2024-12-05T…          40 F               Chance Light…
+14     14 Thursday Night  2024-12-05T…          33 F               Mostly Cloud…</code></pre>
+</div>
+</div>
+</section>
+<section id="finalizing-the-data-frame-clean" class="level3">
+<h3 class="anchored" data-anchor-id="finalizing-the-data-frame-clean">·Finalizing the Data Frame Clean</h3>
+<p><code>$startTime</code> is in a character datatype although the datapoints are technically a date and time span. <del>While its completely possible to convert to reflect this, I will instead use the char type to select for “dates” and create a column that I can group into days of the week.</del></p>
+<p>I indeed had to come back to this code to fix it! The API will respond very time this code is run with my key, the data will change to reflect the time and the new forecast. It is absolutely necessary to use the <code>weekdays()</code> to auto populate day of the week depending on the ever changing <code>$startTime</code></p>
+<div class="cell" data-evaluate="false">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>forecast<span class="sc">$</span>startTime <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(forecast<span class="sc">$</span>startTime)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> forecast <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day=</span> <span class="fu">weekdays</span>(startTime)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(startTime) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(startTime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-a-forecast-visualization-using-ggplot" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-forecast-visualization-using-ggplot">·Creating a Forecast Visualization using ggplot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>forecast <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(day, temperature, <span class="at">fill=</span> temperature))<span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">50</span>)<span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>day, <span class="at">scales =</span> <span class="st">"free_x"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">7</span>, <span class="at">axis.labels =</span> <span class="st">"all_y"</span>, <span class="at">drop =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#FFFFFF"</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">colour =</span><span class="st">"#FFFFFF"</span>))<span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"7 DAY FORECAST"</span>, <span class="at">caption =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="addressing-issues" class="level3">
+<h3 class="anchored" data-anchor-id="addressing-issues">·Addressing Issues</h3>
+<p>The plot is close to what I intend, but there are several issues here that need to be addressed:</p>
+<ol type="1">
+<li><p>The API request outputs current forecast, the day of the week is not specific enough.</p></li>
+<li><p>The filled blocks should be color graded to better depict the high and low of the day</p></li>
+<li><p>The day of the week appears on both the top and bottom</p></li>
+<li><p>Y axis label doesn’t specify temperature unit</p></li>
+<li><p>Weather forecast has an in between where the beginning of the window has only once observation (night) and the end of the window only has one observation (day). using geom_line is not efficient because it requires two points within the grouping.<br>
+EX:</p>
+<p><img src="images/8.png" class="img-fluid"></p></li>
+</ol>
+<p><strong>#1</strong> and <strong>#3</strong> can be fixed by changing the data type of <code>$startTime</code> after its adjusted, the column can be used as the x in the ggplot base. Then the plot will show the day of the week and the date instead of being redundant. The column name will appear in the x axis now but we can remove that.</p>
+<p><strong>#4</strong> can be solved by adding a <code>ylab()</code> line to the ggplot code. <strong>#2</strong> however becomes a little more complicated. <code>geom_line()</code> does not support “fill”. Its possible to use <code>geom_point()</code> in <code>shape = 15</code> (square) and pair it with <code>geom_line()</code>, then adjust the size and line widths to match in a way that seems like one large box. But even so the gradient wouldn’t work.</p>
+<p>A possible fix pivoting wider so that the observations in <code>$name</code> that predict “night” temperature are in their own column. This way it would be easier to plot a range. But, for now, the visualization gets the point across.</p>
+<p><strong>#5</strong> The API returns a single weather data point when the forecast window moves. <code>geom_tile()</code> was an easy fix, but the visualization is not as intended.</p>
+</section>
+<section id="ggplot-redo" class="level3">
+<h3 class="anchored" data-anchor-id="ggplot-redo">·ggPlot redo</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><img src="images/9.png" class="img-fluid"></p>
+</section>
+<section id="useful-references" class="level3">
+<h3 class="anchored" data-anchor-id="useful-references">·Useful References</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset" style="fill: 4px solid #F8F8F8;">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Text Format</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Video Format</a></li></ul>
+<div class="tab-content" style="fill: 4px solid #F8F8F8;">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li><p>Note: Using Quarto for HTML Documents<br>
+<em>“HTML Basics”</em><br>
+<a href="https://quarto.org/docs/output-formats/html-basics.html" class="uri">https://quarto.org/docs/output-formats/html-basics.html</a></p></li>
+<li><p>Note: Adjusting Chunks<br>
+“<em>Options: Chunk Options and package options”</em><br>
+<a href="https://yihui.org/knitr/options/#text-output" class="uri">https://yihui.org/knitr/options/#text-output</a></p></li>
+<li><p>Note: Adjusting Facet themes<br>
+<em>“The Art of Organization: Facets and Themes in ggplot2”</em><br>
+<a href="https://medium.com/number-around-us/the-art-of-organization-facets-and-themes-in-ggplot2-5c591bb3c54c" class="uri">https://medium.com/number-around-us/the-art-of-organization-facets-and-themes-in-ggplot2-5c591bb3c54c</a></p></li>
+<li><p>Note: Starts with bigger picture and works inward to the minute details<br>
+<em>“WebDev4R: The Ultimate Guide To Get Data Through APIs With {httr2} and R”</em><br>
+<a href="https://albert-rapp.de/posts/web_dev/07_httr2_ultimate_guide/07_httr2" class="uri">https://albert-rapp.de/posts/web_dev/07_httr2_ultimate_guide/07_httr2</a></p></li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ul>
+<li><p>FULL Text Control With ggplot &amp; {marquee} | Step-By-Step Tutorial<br>
+<a href="https://www.youtube.com/watch?v=a8a_kLaYRlg" class="uri">https://www.youtube.com/watch?v=a8a_kLaYRlg</a></p></li>
+<li><p>How to Get Data From APIs with R &amp; {httr2} | Ultimate Step-By-Step Tutorial<br>
+<a href="https://www.youtube.com/watch?v=hmtE4QGIOuk" class="uri">https://www.youtube.com/watch?v=hmtE4QGIOuk</a></p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
